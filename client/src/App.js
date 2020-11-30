@@ -2,8 +2,8 @@ import React from 'react';
 
 
 const App = ()=>(
-  <div>
-    <h1> Rent It </h1>
+  <div className="container p-5">
+    <h1> MERN CRUD </h1>
   </div>
 )
 
