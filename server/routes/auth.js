@@ -31,11 +31,15 @@ router.post('/register',async(req, res)=> {
         return res.status(400).json({msg :"Please enter all the information"})
 //1- The email is not alredy at the database
 
+const doesExist = await User.findOne({ email })
+if(doesExist)
+return res.status(400).json({msg :"the email is used"})
 
  
 
 //2- The inputs are correct using the validation 
-
+//const testValidate = await querySchema.validateAsync(req.body);
+//console.log(testValidate)
    const user = new User({
 
        name         : name,
