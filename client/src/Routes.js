@@ -2,8 +2,9 @@ import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import App from './App'
 import Create from './Create';
-import Registration from './Registration'
-import Signin from './Signin'
+import Registration from './components/Registration'
+import Signin from './components/Signin'
+import userContex from "./context/userContext"
 /************************************************* */
 const Routes =()=> {
     return(

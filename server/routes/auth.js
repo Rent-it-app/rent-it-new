@@ -6,10 +6,14 @@ const User = require('../models/User')
 const Joi = require('@hapi/joi');
 //for hashing the password
 const bcrypt = require('bcrypt');
+//for the token
+const JWT = require('jsonwebtoken');
 
 const validator = require('express-joi-validation').createValidator({})
-
+//the user model schema
 const { schema } = require('../models/User');
+
+require('dotenv').config()
 
 /******************************************/
 //the validation schema using joi :)
@@ -57,12 +61,51 @@ const hashedPassword = await bcrypt.hash(password,salt);
        email        : email,
        password     : hashedPassword,
    })
+   
    try {
        const savedUser = await user.save();//if there is no error save the user at db
-       res.json(savedUser);//to make shure everything is right
+       res.json(savedUser);//go to signin
    } catch (error) {
        res.status(500).send(error);
    }
 
 })
+
+/**************************************************/
+/*WhAT i NEED TO DO ?
+1- take the value (email and password) and store them at const
+2- check if the values are not empty
+3-look for the email at the db using(findone method)
+3- the pass is encripted sooo , I will use the tokens method and gooooogle for it
+*/
+router.post('/signin',async(req, res)=> {
+    try {
+        const { email, password } = req.body;
+
+        if(!email || !password)
+        return res.status(400).json({msg :"password and email are required"})
+
+        //3-find the user email at the db by email since it is uonic and it will return boolean so..
+        const retrevdUser = await User.findOne({ email:email }) ;
+        if( !retrevdUser )
+        return res.status(400).json({msg :"Sorry you don't have acount on the webpage please login... 3eeeb 3aleek"})
+
+        //4-You need to compare the encripted pass with the pass entered from the user by using bcrypt.compare
+        //it will return boolean so 
+        const comparePass = await bcrypt.compare( password, retrevdUser.password )
+        if( !comparePass )
+        return res.status(400).json({msg :"Invalid Credentials, 3eeeeb 3aleeek U_U "})
+
+        //5- create the token for the user
+        //-make the secretkey by  require('crypto').randomBytes(64).toString('hex') at the terminal but before that you 
+        //should write node so you can use it 
+        const token = JWT.sign({ retrevdUser : retrevdUser._id }, process.env.SECRET_TOKEN)
+        res.json({ token, retrevdUser :{id:retrevdUser._id , email: retrevdUser.email} })
+    } catch (error) {
+        return res.status(500).json({err : error.message})
+
+ 
+    }
+})
+
 module.exports = router;

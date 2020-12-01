@@ -1,9 +1,9 @@
 import React from 'react';
-
+import Registration from './components/Registration'
 
 const App = ()=>(
   <div className="container p-5">
-    <h1> MERN CRUD </h1>
+    <Registration />
   </div>
 )
 
