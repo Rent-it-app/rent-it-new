@@ -18,11 +18,7 @@ const userSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    passwordAgain:{
-        type: String,
-        required: true,
-        min: 8,
-    },
+   
 
 }, {timestamps: true});
 
