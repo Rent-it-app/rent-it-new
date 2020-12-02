@@ -21,7 +21,7 @@ const querySchema = Joi.object({
 
     name         : Joi.string().required(),
     email        : Joi.string().required().lowercase().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
-    password     : Joi.string().min(8).required().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),//to be mix of these values
+    password     : Joi.string().min(8).required(),
     passwordAgain: Joi.ref('password'),//to equal password
 
   })
@@ -36,20 +36,20 @@ router.post('/register',async(req, res)=> {
 
 //0- The feileds are empty O.O .. forget this shhhh
 if(!email || !name || !password|| !passwordAgain)
-    return res.status(400).json({msg :"Please enter all the information"})
+    return res.status(401).json({msg :"Please enter all the information"})
 
 //1- The email is not alredy at the database
 const doesExist = await User.findOne({ email })
 if(doesExist)
-    return res.status(400).json({msg :"the email is used"})
+    return res.status(402).json({msg :"the email is used"})
 
  
 
 //2- The inputs are correct using the validation 
 const{error}         =querySchema.validate(req.body);
 if(error){
-    console.log(error)
-    return res.status(400).json({msg :error.details[0].message})}
+   console.log(error)
+    return res.status(403).json({msg :error.details[0].message})}
 
 //hashhhhhhhh
 const salt           = await bcrypt.genSalt();
@@ -83,24 +83,26 @@ router.post('/signin',async(req, res)=> {
         const { email, password } = req.body;
 
         if(!email || !password)
-        return res.status(400).json({msg :"password and email are required"})
+        return res.status(401).json({msg :"password and email are required"})
 
         //3-find the user email at the db by email since it is uonic and it will return boolean so..
         const retrevdUser = await User.findOne({ email:email }) ;
-        if( !retrevdUser )
-        return res.status(400).json({msg :"Sorry you don't have acount on the webpage please login... 3eeeb 3aleek"})
-
+        if( !retrevdUser ){
+        return res.status(402).json({msg :"Sorry you don't have acount on the webpage please login... 3eeeb 3aleek"})
+        alert("Sorry you don't have acount on the webpage please login...")
+        }
         //4-You need to compare the encripted pass with the pass entered from the user by using bcrypt.compare
         //it will return boolean so 
         const comparePass = await bcrypt.compare( password, retrevdUser.password )
         if( !comparePass )
-        return res.status(400).json({msg :"Invalid Credentials, 3eeeeb 3aleeek U_U "})
+        return res.status(403).json({msg :"Invalid Credentials, 3eeeeb 3aleeek U_U "})
 
         //5- create the token for the user
-        //-make the secretkey by  require('crypto').randomBytes(64).toString('hex') at the terminal but before that you 
+        //-make the SECRET_TOKEN by  require('crypto').randomBytes(64).toString('hex') at the terminal but before that you 
         //should write node so you can use it 
+        //sign take (what we wont to serialized)
         const token = JWT.sign({ retrevdUser : retrevdUser._id }, process.env.SECRET_TOKEN)
-        res.json({ token, retrevdUser :{id:retrevdUser._id , email: retrevdUser.email} })
+        res.status(200).json({ token, retrevdUser :{id:retrevdUser._id , email: retrevdUser.email} })
     } catch (error) {
         return res.status(500).json({err : error.message})
 
