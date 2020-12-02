@@ -46,7 +46,7 @@ if(doesExist)
  
 
 //2- The inputs are correct using the validation 
-const{error}         =querySchema.validate(req.body);
+const{error}         = querySchema.validate(req.body);
 if(error){
    console.log(error)
     return res.status(403).json({msg :error.details[0].message})}
@@ -88,22 +88,24 @@ router.post('/signin',async(req, res)=> {
         //3-find the user email at the db by email since it is uonic and it will return boolean so..
         const retrevdUser = await User.findOne({ email:email }) ;
         if( !retrevdUser ){
-        return res.status(402).json({msg :"Sorry you don't have acount on the webpage please login... 3eeeb 3aleek"})
-        alert("Sorry you don't have acount on the webpage please login...")
+        return res.status(402).json({error:"Sorry you don't have acount on the webpage please login... 3eeeb 3aleek"})
+        
         }
         //4-You need to compare the encripted pass with the pass entered from the user by using bcrypt.compare
         //it will return boolean so 
         const comparePass = await bcrypt.compare( password, retrevdUser.password )
         if( !comparePass )
-        return res.status(403).json({msg :"Invalid Credentials, 3eeeeb 3aleeek U_U "})
+        return res.status(403).json({error :"Invalid Credentials, 3eeeeb 3aleeek U_U "})
 
         //5- create the token for the user
         //-make the SECRET_TOKEN by  require('crypto').randomBytes(64).toString('hex') at the terminal but before that you 
         //should write node so you can use it 
         //sign take (what we wont to serialized)
         const token = JWT.sign({ retrevdUser : retrevdUser._id }, process.env.SECRET_TOKEN)
-        res.status(200).json({ token, retrevdUser :{id:retrevdUser._id , email: retrevdUser.email} })
+        res.header('theToken',token);// put the token in the header so we send it 
+        res.status(200).json({ token, retrevdUser :{id:retrevdUser._id , email: retrevdUser.email} }) //send the token to the user
     } catch (error) {
+        alert(error.res.data.error);
         return res.status(500).json({err : error.message})
 
  

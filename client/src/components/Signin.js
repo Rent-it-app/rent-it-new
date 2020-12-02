@@ -11,16 +11,16 @@ const [ email        , setEmail    ]     = useState();
 const [ password     , setPassword ]     = useState();
 
 //we need to send the data from frontend to backend , I will use axios for that ..
-const submit =async ()=>{
-    
+const submit =async (e)=>{
+  e.preventDefault();
   const newUser = { email ,password } ;
- await axios.post("http://localhost:8000/api/signin" , newUser);
+ await axios.post("http://localhost:8000/api/signin" , newUser).then(response => {}).catch(error =>{})
 }
 
   return(
   <div className="container p-5">
     <h2> Wellcome </h2>
-    <h2> Please enter your information to sign up </h2>
+    <h2> Please enter your information to sign in </h2>
     <form>    
         <div className="form-group">
             <label className="text-muted"> Email </label>

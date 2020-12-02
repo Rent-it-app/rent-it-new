@@ -8,6 +8,7 @@ require('dotenv').config();
 
 const postRoutes = require('./routes/post')
 const authRoutes = require('./routes/auth')
+const testRoutes = require('./routes/test')
 //app
 const app = express();
 
@@ -35,7 +36,7 @@ app.use('/api',postRoutes);
 
 app.use('/api',authRoutes);
 
-
+app.use('/api/test',testRoutes);
 
 //port with what ever the port will be given by heruko
 const port = process.env.PORT || 8000

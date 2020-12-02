@@ -23,7 +23,7 @@ const submit =async (e)=>{
    return ( 
   <div className="container p-5">
     <h2> Wellcome { name }</h2>
-    <h2> Please enter your information to sign in </h2>
+    <h2> Please enter your information to sign up </h2>
     <form>
         <div className="form-group">
             <label className="text-muted"> Name: </label>
@@ -44,7 +44,7 @@ const submit =async (e)=>{
         </div>
         <div>
             <button onClick={submit} className="btn btn-primary"> Submit </button>
-            <button className="btn btn-primary"> Login </button>
+            
         </div>
     </form>
   </div>
