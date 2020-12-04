@@ -4,32 +4,35 @@ Gone are the days when you had to lock down your investment in furniture, applia
 ## Motivation
 Rent it lets you rent furniture, appliances & electronics on a monthly basis at affordable prices, eliminating the need for a huge budget to get things done!
 
-
 ## Screenshots
 Include logo/demo screenshot etc.
 
 ## Tech/framework used
-Front End : react , react-router .( extra credit: redux) Design : Material UI, semantic UI, bootstrap , ( extra credit: sprint animation) Db : mysql .(extra credit: Firebase only for media) Back end : nodejs ,express, express route. Authentication : JWT => bcrypt - Token Deployment : Heroku- (extra credit:AWS, Firebase)
+Front End : react,react-router and react hooks
+Design :bootstrap
+Db : Mongo-Atlas
+Back end : nodejs ,express, express route. 
+Authentication : JWT => bcrypt - Token
+Deployment : Heroku.
 
 ## Features
-• Wide range of products. • Best quality at the lowest price. • Free relocation when you move. • Free maintenance to stay stress-free. • Delivery & installation is on us. • All-day customer support.
-
-## API Reference
+• Wide range of products. 
+• Best quality at the lowest price. 
+• Free relocation when you move. 
+• Free maintenance to stay stress-free. • Delivery & installation is on us. 
+• All-day customer support.
 
 
 ## How to use?
 Start renting, start saving.
-
-Sign-up providing email and password.
 In the home page pick the category you would like to review.
 Pick up the product you need and suits your budget.
-Click on rent button.
-Provide rental duration.
+Click on rent it button.
 Approve.
-choose if you want it to be delivered/ if yes provide location.
-submit order.
 wait to receive a call from our customer support within 2 hours max.
-Credits
+
+
+## Credits
 Credits goes to Rbk team- and the awesome people who worked on this project Farah,Marwa,Jumana, Tahani.
 
 ## License
