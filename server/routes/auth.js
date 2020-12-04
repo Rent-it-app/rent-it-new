@@ -14,6 +14,7 @@ const validator = require('express-joi-validation').createValidator({})
 const { schema } = require('../models/User');
 
 require('dotenv').config()
+const verifyToken = require('./verifyToken');
 
 /******************************************/
 //the validation schema using joi :)
@@ -103,12 +104,38 @@ router.post('/signin',async(req, res)=> {
         //sign take (what we wont to serialized)
         const token = JWT.sign({ retrevdUser : retrevdUser._id }, process.env.SECRET_TOKEN)
         res.header('theToken',token);// put the token in the header so we send it 
-        res.status(200).json({ token, retrevdUser :{id:retrevdUser._id , email: retrevdUser.email} }) //send the token to the user
+        res.status(200).json({ token, retrevdUser :{id:retrevdUser._id , name: retrevdUser.name} }) //send the token to the local storge
     } catch (error) {
         return res.status(500).json({err : error.message})
 
  
     }
+})
+/************************************************************** */
+
+router.post('/check_token', async (req ,res) =>{
+    try {
+        //get the token from the header 
+        const checktoken = req.header('theToken');
+        if(!checktoken) return res.json('Empty');
+        //check if it's valide token
+        const verified     = JWT.verify(checktoken , process.env.SECRET_TOKEN);
+        if(!verified) return res.json('not valid');
+        //check if the user is stored at the database In case we wont to delete his account
+        const userOfToken = await User.findById(verified.id);
+        if(!userOfToken) return res.json(false);
+       
+        return res.json(true);
+
+    } catch (error) {
+        return res.status(500).json({err : error.message})
+    }
+})
+
+router.get("/",verifyToken, async (req,res) => {
+    const user = await User.findById(req.id);
+    console.log(user)
+    res.json({name :user.name , id:user._id })
 })
 
 module.exports = router;

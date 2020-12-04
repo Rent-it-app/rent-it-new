@@ -4,11 +4,16 @@ import App from './App'
 import Create from './Create';
 import Registration from './components/Registration'
 import Signin from './components/Signin'
+//used to put userdata globaly on the app
 
 /************************************************* */
-const Routes =()=> {
-    return(
+
+
+export default function Routes() {
+    
+     return(
         <BrowserRouter>
+      
         {/*need to have the header here */}
          <Switch>
              <Route exact path='/' component = {App} />
@@ -19,7 +24,4 @@ const Routes =()=> {
         </BrowserRouter>
 
     );
-};
-
-
-export default Routes;
+    }

@@ -1,11 +1,13 @@
 //useState is a Hook that allows you to have state variables in functional components.=> very intersting and easy to use <3 love it
 import React , {useState}from 'react';
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 /****************************************************/
 
 //use the arrow function to bind values 
 const Create = ()=>{
+    const history = useHistory();
     
 //useState() better than useing the set method , it's easer, read about the react hooks(useState) https://youtu.be/InKlyPPSpXA
 const [ email        , setEmail ]        = useState();
@@ -15,18 +17,21 @@ const [ passwordAgain, setPasswordAgain] = useState();
 
 //we need to send the data from frontend to backend , I will use axios for that ..
 const submit =async (e)=>{
+    
     e.preventDefault();
  try {
       const newUser = { email ,name ,password ,passwordAgain } ;
    await axios.post("http://localhost:8000/api/register" , newUser);
+   history.push('/')
  } catch (error) {
      alert(error.response.data.msg)
  }  
+
   }
  
    return ( 
   <div className="container p-5">
-    <h2> Wellcome { name }</h2>
+    <h2> Welcome { name }</h2>
     <h2> Please enter your information to sign up </h2>
     <form>
         <div className="form-group">
