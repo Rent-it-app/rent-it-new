@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 
 
 const App = () => {
+    //using react hooks feature- cannot be used with classes
+    //ref: https://www.youtube.com/watch?v=lAW1Jmmr9hc
+    //array destructuring
     const [items, setItems] = useState([]);
 
     const fetchItems = () => {
@@ -43,9 +46,11 @@ const App = () => {
         <div className="container pb-5">
             <Nav />
             <br />
-            <h4  class="mx-auto" style={{width: "400px", color: "#111361" }}> Why Buy It? when you can RENT IT</h4> 
+            <h4  class="mx-auto" style={{width: "500px", color: "#111361" }}> Why Buy It? when you can RENT IT</h4> 
            
             <hr />
+            
+            
             {items.map((item, i) => (
                 <div className="row" key={item._id} style={{ borderBottom: '1px solid silver' }}>
                     <div className="col pt-3 pb-2">
@@ -65,7 +70,7 @@ const App = () => {
                                 </p>
                             </div>
 
-                            <div className="col-md-2 ">
+                            <div className="col-md-2">
                                 <Link to={`/item/update/${item.slug}`} className="btn btn-warning ">
                                     Edit
                                 </Link>
@@ -81,6 +86,8 @@ const App = () => {
                         </div>
                     </div>
                 </div>
+
+
             ))}
         </div>
     );
