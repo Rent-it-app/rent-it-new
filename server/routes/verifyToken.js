@@ -9,10 +9,14 @@ try {
 const token = req.header('theToken');
 //if there is no token === the user don't have account
 console.log(token)
-if(!token) return res.status(401).json({msg:"No token , No enter"});
+if(!token){
+    alert("No token , No enter")
+    return res.status(401).json({msg:"No token , No enter"});
+
+}
     const verified = jwt.verify(token, process.env.SECRET_TOKEN);//veri fy the token using the secret token using this function 
     
-    if(!verified) return res.status(401).json({msg:"verifecation faild"});
+    if(!verified) return res.status(401).json({msg:"Access Denied Man ! verifecation faild"});
  console.log(verified);
 
 req.user = verified.retrevdUser;

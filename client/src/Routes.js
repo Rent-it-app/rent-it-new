@@ -1,60 +1,32 @@
-import React, { useState , useEffect} from 'react'
+import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import App from './App'
-import Axios from "axios";
-import Create from './Create';
+import App from './components/App'
+
+import Create from './components/Create';
 import Registration from './components/Registration'
 import Signin from './components/Signin'
-
+import ContactUs from './components/ContactUs'
 //used to put userdata globaly on the app
-import UserContext from './UserContext'
-
+import UpdateItem from './components/UpdateItem'
+import SingleItem from './components/SingleItem'
+import Nav from './components/Nav'
 /************************************************* */
 
 
 export default function Routes() {
-   /*
-    const {userData , setUserData} = useState({
-        token : undefined,
-        user : undefined
-    });
-
-    useEffect(() => {
-        const checkLoggedIn = async () => {
-          let token = localStorage.getItem("theToken");
-          if (token === null) {
-            localStorage.setItem("theToken", "");
-            token = "";
-          }
-          const tokenRes = await Axios.post(
-            "http://localhost:8000/api/check_token",
-            null,
-            { headers: { "theToken": token } }
-          ); console.log(tokenRes.headers.theToken);
-          if (tokenRes.data) {
-            const userRes = await Axios.get("http://localhost:8000/api/", {
-              headers: { "theToken": token },
-            });
-           
-            setUserData({
-              token,
-              user: userRes.data,
-            });
-          }
-        };
-    
-        checkLoggedIn();
-      }, []);  <UserContext.Provider value ={{ userData , setUserData }} />
-*/
+  
      return(
         <BrowserRouter>
-    
+        <Nav />
         {/*need to have the header here */}
          <Switch>
              <Route exact path='/' component = {App} />
              <Route exact path='/create' component = {Create} />
              <Route exact path='/Register' component = {Registration} />
              <Route exact path='/signin' component = {Signin} />
+             <Route exact path='/item/:slug' component = {SingleItem} />
+             <Route exact path='/item/update/:slug' component = {UpdateItem} />
+             <Route exact path='/contact' component = {ContactUs} />
          </Switch>
         </BrowserRouter>
 

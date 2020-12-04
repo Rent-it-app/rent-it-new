@@ -5,8 +5,9 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+//import the routes of the app ....
+const itemRoutes = require('./routes/item')
 
-const postRoutes = require('./routes/post')
 const authRoutes = require('./routes/auth')
 const testRoutes = require('./routes/test')
 //app
@@ -30,13 +31,9 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 
 //route middleware 
-app.use('/api',postRoutes);
 
-
-
-
+app.use('/api',itemRoutes)
 app.use('/api',authRoutes);
-
 app.use('/api/test',testRoutes);
 
 //port with what ever the port will be given by heruko

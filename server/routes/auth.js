@@ -134,11 +134,11 @@ router.post('/check_token', async (req ,res) =>{
         return res.status(500).json({err : error.message})
     }
 })
-/*
+
 router.get("/",verifyToken, async (req,res) => {
     const user = await User.findById(req.id);
     console.log(user)
     res.json({name :user.name , id:user._id })
 })
-*/
+
 module.exports = router;

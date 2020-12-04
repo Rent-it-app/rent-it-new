@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 
 const {ObjectId} = mongoose.Schema
 
-const postSchema = new mongoose.Schema({
-    title: {
+const itemSchema = new mongoose.Schema({
+    
+    itemName: {
         type: String,
         trim: true,
         min: 3,
@@ -16,17 +17,22 @@ const postSchema = new mongoose.Schema({
         index: true,
         lowercase: true
     },
-    content:{
+    itemDescription:{
         type: {},
         required: true,
         min: 20,
         max: 2000000
     },
+
+    itemPrice:{
+        type: Number,
+        required: true,
+    },
     user:{
         type: String,
-        default: 'Admin'
+        default: 'User'
     }
 
 }, {timestamps: true});
 
-module.exports =mongoose.model('Post', postSchema);
+module.exports =mongoose.model('Item', itemSchema);
