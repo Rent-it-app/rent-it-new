@@ -112,17 +112,20 @@ router.post('/signin',async(req, res)=> {
     }
 })
 /************************************************************** */
-
+//retrun true or false if the token exist and it's valid
 router.post('/check_token', async (req ,res) =>{
     try {
         //get the token from the header 
-        const checktoken = req.header('theToken');
-        if(!checktoken) return res.json('Empty');
+        const token = req.header('theToken');
+       
+        if(!token) return res.json('Empty');
         //check if it's valide token
-        const verified     = JWT.verify(checktoken , process.env.SECRET_TOKEN);
-        if(!verified) return res.json('not valid');
-        //check if the user is stored at the database In case we wont to delete his account
-        const userOfToken = await User.findById(verified.id);
+        const verified     = JWT.verify(token , process.env.SECRET_TOKEN);
+        
+        if(!verified) return res.json(false);
+        //check if the user is stored at the database retrevedUser = id :p
+        const userOfToken = await User.findById(verified.retrevdUser);
+        //console.log(userOfToken) contains all the user data from the db
         if(!userOfToken) return res.json(false);
        
         return res.json(true);
@@ -131,11 +134,11 @@ router.post('/check_token', async (req ,res) =>{
         return res.status(500).json({err : error.message})
     }
 })
-
+/*
 router.get("/",verifyToken, async (req,res) => {
     const user = await User.findById(req.id);
     console.log(user)
     res.json({name :user.name , id:user._id })
 })
-
+*/
 module.exports = router;

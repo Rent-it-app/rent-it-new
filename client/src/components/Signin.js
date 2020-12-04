@@ -17,8 +17,14 @@ const Signin = ()=>{
     e.preventDefault();
     try {
       const newUser = { email ,password } ;
-      await axios.post("http://localhost:8000/api/signin" , newUser)
+     // console.log(newUser)
+      const loginRes = await axios.post("http://localhost:8000/api/signin" , newUser)
+     console.log(loginRes.data.token)
+     
+     localStorage.setItem("theToken", loginRes.data.token);
       history.push('/')
+    
+
     } catch (error) {
       alert(error.response.data.msg)
     }
