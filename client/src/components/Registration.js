@@ -22,7 +22,7 @@ const submit =async (e)=>{
  try {
       const newUser = { email ,name ,password ,passwordAgain } ;
    await axios.post("http://localhost:8000/api/register" , newUser);
-   history.push('/')
+   history.push('/signin')
  } catch (error) {
      alert(error.response.data.msg)
  }  

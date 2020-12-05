@@ -6,23 +6,23 @@ const jwt = require('jsonwebtoken');
 //next === callback function 
 module.exports = function(req,res,next){
 try {
-const token = req.header('theToken');
-//if there is no token === the user don't have account
+const token = localStorage.getItem(req.body.theToken)
 console.log(token)
-if(!token){
-    alert("No token , No enter")
-    return res.status(401).json({msg:"No token , No enter"});
+//if there is no token === the user don't have account
 
-}
+if(!token)
+    return res.status(401).json({msg:"Please sign in"});
+
+
     const verified = jwt.verify(token, process.env.SECRET_TOKEN);//veri fy the token using the secret token using this function 
-    
+    console.log(verified);
     if(!verified) return res.status(401).json({msg:"Access Denied Man ! verifecation faild"});
- console.log(verified);
+
 
 req.user = verified.retrevdUser;
     next();
-} catch (error) {
-    return res.status(400).json({msg:"Access Denied Man ! verifecation faild"});
+} catch (error) { console.log(error.response);
+    return res.status(400).json({msg:" verifecation faild"});
 }
 
 }

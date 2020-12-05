@@ -6,11 +6,11 @@ const router = express.Router();
 const {create,list, read, update, remove} = require('../controllers/item');
 const verify = require('./verifyToken');
 
-router.post('/item',verify,create);
+router.post('/item',create);
 router.get('/items', list);
 router.get('/item/:slug',read);
 
-router.put('/item/:slug',verify,update);
-router.delete('/item/:slug',verify,remove);
+router.put('/item/:slug',update);
+router.delete('/item/:slug',remove);
 
 module.exports = router;

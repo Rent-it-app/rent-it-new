@@ -27,6 +27,7 @@ export default function Routes() {
              <Route exact path='/item/:slug' component = {SingleItem} />
              <Route exact path='/item/update/:slug' component = {UpdateItem} />
              <Route exact path='/contact' component = {ContactUs} />
+             
          </Switch>
         </BrowserRouter>
 

@@ -42,7 +42,7 @@ const App = () => {
         <div className="container pb-5">
            
             <br />
-            <h4  class="mx-auto" style={{width: "400px", color: "#111361" }}> Why Buy It? when you can RENT IT</h4> 
+            <h4  className="mx-auto" style={{width: "400px", color: "#111361" }}> Why Buy It? when you can RENT IT</h4> 
            
             <hr />
             {items.map((item, i) => (

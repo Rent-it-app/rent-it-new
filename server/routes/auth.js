@@ -14,7 +14,9 @@ const validator = require('express-joi-validation').createValidator({})
 const { schema } = require('../models/User');
 
 require('dotenv').config()
-const verifyToken = require('./verifyToken');
+
+
+
 
 /******************************************/
 //the validation schema using joi :)
@@ -134,11 +136,11 @@ router.post('/check_token', async (req ,res) =>{
         return res.status(500).json({err : error.message})
     }
 })
-
+/*
 router.get("/",verifyToken, async (req,res) => {
-    const user = await User.findById(req.id);
+    const user = await User.findById(req.retrevdUser);
     console.log(user)
     res.json({name :user.name , id:user._id })
 })
-
+*/
 module.exports = router;
