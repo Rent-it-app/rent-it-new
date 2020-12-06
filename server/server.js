@@ -5,8 +5,11 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-const postRoutes = require('./routes/post')
+//import the routes of the app ....
+const itemRoutes = require('./routes/item')
 
+const authRoutes = require('./routes/auth')
+const testRoutes = require('./routes/test')
 //app
 const app = express();
 
@@ -15,7 +18,8 @@ mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
-    useUnifiedTopology: true 
+    useUnifiedTopology: true ,
+    
 })
 .then(()=> console.log('DB connected'))
 .catch(err=> console.log(err));
@@ -27,11 +31,12 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 
 //route middleware 
-app.use('/api',postRoutes)
 
+app.use('/api',itemRoutes)
+app.use('/api',authRoutes);
+app.use('/api/test',testRoutes);
 
-
-//port
+//port with what ever the port will be given by heruko
 const port = process.env.PORT || 8000
 app.listen(port, () => console.log(`Server is running on port ${port}`));
 
